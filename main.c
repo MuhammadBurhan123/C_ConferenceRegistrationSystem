@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// Define the Participant structure
 struct Participant {
     char name[50];
     int id;
@@ -10,7 +9,6 @@ struct Participant {
     int paymentStatus;
 };
 
-// Function to load participants from a file
 void loadParticipants(struct Participant participants[], int size) {
     FILE* file = fopen("participants.txt", "r");
     if (file == NULL) {
@@ -28,7 +26,6 @@ void loadParticipants(struct Participant participants[], int size) {
     fclose(file);
 }
 
-// Function to input participant data
 void inputParticipantData(struct Participant *participant) {
     printf("Enter participant name: ");
     scanf(" %49[^\n]", participant->name);
@@ -54,7 +51,6 @@ void inputParticipantData(struct Participant *participant) {
     fclose(file);
 }
 
-// Function to update payment status
 const char* updatePaymentStatus(struct Participant *participant) {
     participant->paymentStatus = 1;
 
@@ -64,7 +60,6 @@ const char* updatePaymentStatus(struct Participant *participant) {
         return "Payment status updated, but error updating file.";
     }
 
-    // Find and update the corresponding participant's payment status in the file
     while (fscanf(file, "%49[^\n]\n%d\n%49[^\n]\n%f\n%d\n",
                   participant->name, &participant->id,
                   participant->organization, &participant->registrationFee,
@@ -81,7 +76,6 @@ const char* updatePaymentStatus(struct Participant *participant) {
     return "Participant not found in the file.";
 }
 
-// Function to display participants
 void displayParticipants(struct Participant participants[], int size) {
     for (int i = 0; i < size; ++i) {
         printf("Name: %s\nID: %d\nOrganization: %s\nRegistration Fee: %.2f\nPayment Status: %s\n\n",
@@ -90,16 +84,12 @@ void displayParticipants(struct Participant participants[], int size) {
     }
 }
 
-// Recursive function to adjust registration fee based on certain conditions
 void adjustFee(struct Participant *participant) {
-    // Example: Adjust fee based on ID
     if (participant->id % 2 == 0) {
-        participant->registrationFee *= 0.9; // 10% discount for even IDs
+        participant->registrationFee *= 0.9; 
     }
 
-    // You can add more conditions as needed
 
-    // Recursive call with a base case to avoid infinite recursion
     if (participant->registrationFee > 100.0) {
         adjustFee(participant);
     }
